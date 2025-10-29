@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Eletrônicos - Dashboard</title>
+    <link rel="stylesheet" href="dist/output.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">E-Tech Admin</div>
+        <nav class="menu">
+            <ul>
+                <li><a href="#" data-page="home"><i class="icon-home"></i> Home</a></li>
+                <li><a href="#" data-page="dashboard"><i class="icon-chart"></i> Gráficos Dashboard de Vendas</a></li>
+                <li class="submenu-parent">
+                    <a href="#" class="submenu-toggle"><i class="icon-product"></i> Produtos em Estoque <span class="arrow">▼</span></a>
+                    <ul class="submenu">
+                        <li><a href="#" data-page="produtos-listar">Listar Produtos</a></li>
+                        <li><a href="#" data-page="produtos-cadastrar">Cadastrar Produto</a></li>
+                        <li><a href="#" data-page="produtos-importar">Importar (Excel/CSV)</a></li>
+                    </ul>
+                </li>
+                <li class="submenu-parent">
+                    <a href="#" class="submenu-toggle"><i class="icon-user"></i> Clientes <span class="arrow">▼</span></a>
+                    <ul class="submenu">
+                        <li><a href="#" data-page="clientes-listar">Listar Clientes</a></li>
+                        <li><a href="#" data-page="clientes-cadastrar">Cadastrar Cliente</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content">
+        <header class="header">
+            <h1>Bem-vindo ao Painel de Controle</h1>
+            <div class="user-info">Admin <i class="icon-settings"></i></div>
+        </header>
+
+        <main id="main-content">
+            <section id="page-home" class="page-content active">
+                <h2>Início</h2>
+                <p>Visão geral do sistema de e-commerce. Utilize o menu ao lado para navegar entre os módulos.</p>
+                <div class="stats-grid">
+                    <div class="stat-card"><h3>Total de Vendas</h3><p>R$ 150.000,00</p></div>
+                    <div class="stat-card"><h3>Produtos em Estoque</h3><p>850 Itens</p></div>
+                    <div class="stat-card"><h3>Novos Clientes</h3><p>45</p></div>
+                    <div class="stat-card"><h3>Pedidos Pendentes</h3><p>12</p></div>
+                </div>
+            </section>
+
+            <section id="page-dashboard" class="page-content">
+                <h2>Gráficos Dashboard de Vendas</h2>
+                <div class="chart-container">
+                    <h3>Vendas por Mês</h3>
+                    <canvas id="vendasChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Distribuição por Categoria</h3>
+                    <canvas id="categoriaChart"></canvas>
+                </div>
+            </section>
+
+            <section id="page-produtos-cadastrar" class="page-content">
+                <h2>Cadastrar Novo Produto</h2>
+                <form id="form-produto">
+                    <div class="form-group">
+                        <label for="prod-nome">Nome do Produto:</label>
+                        <input type="text" id="prod-nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="prod-descricao">Descrição:</label>
+                        <textarea id="prod-descricao" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="prod-caracteristicas">Características:</label>
+                        <input type="text" id="prod-caracteristicas">
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="prod-valor">Valor (R$):</label>
+                        <input type="number" id="prod-valor" step="0.01" required>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="prod-estoque">Estoque:</label>
+                        <input type="number" id="prod-estoque" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Salvar Produto</button>
+                </form>
+            </section>
+
+            <section id="page-produtos-listar" class="page-content">
+                <h2>Produtos em Estoque</h2>
+                <table class="data-table" id="tabela-produtos">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Valor</th>
+                            <th>Estoque</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </section>
+
+            <section id="page-produtos-importar" class="page-content">
+                <h2>Importar Produtos (Excel/CSV)</h2>
+                <p>Selecione um arquivo para importar os dados de produtos.</p>
+                <form id="form-importar-produto">
+                    <div class="form-group">
+                        <label for="import-file">Arquivo (.xlsx, .csv):</label>
+                        <input type="file" id="import-file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Importar Arquivo</button>
+                </form>
+            </section>
+
+            <section id="page-clientes-cadastrar" class="page-content">
+                <h2>Cadastrar Novo Cliente</h2>
+                <form id="form-cliente">
+                    <div class="form-group">
+                        <label for="cli-nome">Nome Completo:</label>
+                        <input type="text" id="cli-nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cli-endereco">Endereço:</label>
+                        <input type="text" id="cli-endereco" required>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="cli-telefone">Telefone:</label>
+                        <input type="tel" id="cli-telefone" required>
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="cli-email">E-mail:</label>
+                        <input type="email" id="cli-email" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Salvar Cliente</button>
+                </form>
+            </section>
+
+            <section id="page-clientes-listar" class="page-content">
+                <h2>Lista de Clientes</h2>
+                <table class="data-table" id="tabela-clientes">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
