@@ -3,27 +3,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Controle de Navegação e Submenus
     // ------------------------------------------
     const mainContent = document.getElementById('main-content');
-    const menuLinks = document.querySelectorAll('.menu a[data-page]');
+    const menuLinks = document.querySelectorAll('.menu a'); 
     const submenuToggles = document.querySelectorAll('.submenu-toggle');
 
-    // Função para mostrar a página correta
+    // CLASSES TAILWIND PARA ATIVAÇÃO/DESATIVAÇÃO DE ESTILO
+    const ACTIVE_LINK_CLASSES = ['bg-gray-700', 'text-primary-400', 'font-semibold'];
+    const INACTIVE_LINK_CLASSES = ['hover:bg-gray-700', 'hover:text-primary-400', 'font-normal'];
+    const SUBMENU_OPEN_CLASSES = ['max-h-64', 'py-2']; 
+    const SUBMENU_CLOSED_CLASSES = ['max-h-0', 'py-0']; 
+
+    // Função para mostrar a página correta (CORRIGIDA PARA USAR HIDDEN/BLOCK)
     function showPage(pageId) {
         // Oculta todas as seções de conteúdo
         document.querySelectorAll('.page-content').forEach(section => {
-            section.classList.remove('active');
+            section.classList.remove('block'); // Tira o display: block
+            section.classList.add('hidden');   // Adiciona display: none
         });
 
         // Mostra a seção desejada
         const targetPage = document.getElementById(`page-${pageId}`);
         if (targetPage) {
-            targetPage.classList.add('active');
+            targetPage.classList.remove('hidden'); // Tira display: none
+            targetPage.classList.add('block');     // Adiciona display: block
         }
+        
+        // Rolagem para o topo da área de conteúdo (melhora UX na troca de página)
+        mainContent.scrollTop = 0;
 
-        // Atualiza o estado ativo dos links de menu
+        // Atualiza o estado ativo dos links de menu 
         menuLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('data-page') === pageId) {
-                link.classList.add('active');
+            const isTargetPage = link.getAttribute('data-page') === pageId;
+            
+            if (isTargetPage) {
+                link.classList.remove(...INACTIVE_LINK_CLASSES.filter(c => c.startsWith('hover:')));
+                link.classList.add(...ACTIVE_LINK_CLASSES);
+            } else {
+                // Remove as classes ativas (para evitar duplicidade)
+                link.classList.remove(...ACTIVE_LINK_CLASSES);
+                link.classList.add(...INACTIVE_LINK_CLASSES.filter(c => c.startsWith('hover:'))); 
             }
         });
 
@@ -34,10 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Inicializa na página 'home'
+    // Note: 'page-home' deve começar com a classe 'block' no HTML
     showPage('home');
 
     // Event listener para links de navegação
-    menuLinks.forEach(link => {
+    document.querySelectorAll('.menu a[data-page]').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const pageId = e.currentTarget.getAttribute('data-page');
@@ -51,12 +69,28 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const parentLi = toggle.closest('.submenu-parent');
             const submenu = parentLi.querySelector('.submenu');
+            const arrow = parentLi.querySelector('.arrow');
 
-            // Alterna a classe 'active' no pai e 'open' no submenu
             parentLi.classList.toggle('active');
-            submenu.classList.toggle('open');
+            
+            if (parentLi.classList.contains('active')) {
+                submenu.classList.remove(...SUBMENU_CLOSED_CLASSES);
+                submenu.classList.add(...SUBMENU_OPEN_CLASSES);
+                arrow.classList.add('rotate-180');
+            } else {
+                submenu.classList.remove(...SUBMENU_OPEN_CLASSES);
+                submenu.classList.add(...SUBMENU_CLOSED_CLASSES);
+                arrow.classList.remove('rotate-180');
+            }
         });
     });
+
+    // Garante que o submenu inicie fechado ao carregar a página
+    document.querySelectorAll('.submenu').forEach(submenu => {
+        submenu.classList.add('max-h-0', 'py-0');
+        submenu.classList.remove('max-h-64', 'py-2', 'open'); 
+    });
+
 
     // ------------------------------------------
     // 2. Simulação de Dados e Funcionalidades
@@ -83,17 +117,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tabelaBody.innerHTML = ''; // Limpa as linhas existentes
 
-        produtos.forEach(prod => {
+        produtos.forEach((prod, index) => {
             const row = tabelaBody.insertRow();
+            // Aplica as classes Tailwind de borda e zebra-striping
+            row.className = `border-b border-gray-200 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`;
             row.innerHTML = `
-                <td>${prod.nome}</td>
-                <td>R$ ${prod.valor.toFixed(2).replace('.', ',')}</td>
-                <td>${prod.estoque}</td>
-                <td><button class="btn-action" data-id="${prod.id}">Editar</button></td>
+                <td class="py-3 px-4 text-gray-700">${prod.nome}</td>
+                <td class="py-3 px-4 text-gray-700">R$ ${prod.valor.toFixed(2).replace('.', ',')}</td>
+                <td class="py-3 px-4 text-gray-700">${prod.estoque}</td>
+                <td class="py-3 px-4 text-gray-700">
+                    <button class="text-primary-600 hover:text-primary-800 font-medium" data-id="${prod.id}">Editar</button>
+                </td>
             `;
         });
     }
-    // Chamar a renderização inicial
     renderizarTabelaProdutos();
 
     // Event listener para o formulário de Cadastro de Produto
@@ -126,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const fileInput = document.getElementById('import-file');
             if (fileInput.files.length > 0) {
-                // Simulação de processamento de arquivo
                 alert(`Arquivo "${fileInput.files[0].name}" simulado como importado com sucesso! (Funcionalidade real exige backend)`);
                 formImportarProduto.reset();
             } else {
@@ -144,17 +180,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tabelaBody.innerHTML = ''; // Limpa as linhas existentes
 
-        clientes.forEach(cli => {
+        clientes.forEach((cli, index) => {
             const row = tabelaBody.insertRow();
+            // Aplica as classes Tailwind de borda e zebra-striping
+            row.className = `border-b border-gray-200 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`;
             row.innerHTML = `
-                <td>${cli.nome}</td>
-                <td>${cli.email}</td>
-                <td>${cli.telefone}</td>
-                <td><button class="btn-action" data-id="${cli.id}">Editar</button></td>
+                <td class="py-3 px-4 text-gray-700">${cli.nome}</td>
+                <td class="py-3 px-4 text-gray-700">${cli.email}</td>
+                <td class="py-3 px-4 text-gray-700">${cli.telefone}</td>
+                <td class="py-3 px-4 text-gray-700">
+                    <button class="text-primary-600 hover:text-primary-800 font-medium" data-id="${cli.id}">Editar</button>
+                </td>
             `;
         });
     }
-    // Chamar a renderização inicial
     renderizarTabelaClientes();
 
     // Event listener para o formulário de Cadastro de Cliente
@@ -210,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false, // CRUCIAL para respeitar a altura definida no CSS
+                    maintainAspectRatio: false, 
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -251,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false, // CRUCIAL para respeitar a altura definida no CSS
+                    maintainAspectRatio: false, 
                     plugins: {
                         legend: {
                             position: 'top',
