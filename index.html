@@ -1,179 +1,602 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="h-full">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Commerce Eletrônicos - Dashboard</title>
-    <link rel="stylesheet" href="css/output.css">
+    <title>E-Tech Admin - Dashboard Aprimorado</title>
+    <link rel="stylesheet" href="./css/output.css">
+    <style>
+        /* Define o link ativo (Certifique-se de que o seu output.css contenha essas classes se você mover a configuração) */
+        .active-link {
+            background-color: theme('colors.gray.700');
+            color: theme('colors.primary.400');
+            /* Usa a cor primária mais clara para destaque */
+            transform: translateX(4px);
+        }
+
+        /* Garantir que o ícone do link ativo também use a cor primária */
+        .nav-link.active-link span:first-child {
+            color: theme('colors.primary.400');
+        }
+    </style>
 </head>
+
 <body class="font-sans flex h-screen bg-gray-50 text-gray-800 overflow-hidden">
-    
-    <div class="sidebar w-64 bg-gray-800 text-gray-200 p-0 shadow-lg flex-shrink-0 h-full fixed">
-        <div class="logo text-center text-2xl font-bold text-primary-500 pt-10 pb-8 px-5">E-Tech Admin</div>
-        <nav class="menu">
-            <ul>
-                <li><a href="#" data-page="home" class="block p-3 text-lg transition duration-200 hover:bg-gray-700 hover:text-primary-400 active-link"><i class="icon-home"></i> Home</a></li>
-                <li><a href="#" data-page="dashboard" class="block p-3 text-lg transition duration-200 hover:bg-gray-700 hover:text-primary-400"><i class="icon-chart"></i> Gráficos Dashboard de Vendas</a></li>
+    <div id="sidebar"
+        class="sidebar w-64 bg-gradient-to-b from-gray-800 to-gray-900 text-gray-200 shadow-2xl flex-shrink-0 h-full fixed z-30 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+        <div
+            class="logo text-center text-2xl font-bold text-primary-500 pt-10 pb-8 px-5 flex items-center justify-center gap-2 relative">
+            <span class="text-3xl text-primary-500">⚡</span> <span>E-Tech Admin</span>
+            <button id="close-sidebar-btn" class="md:hidden absolute top-4 right-4 text-gray-400 hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <nav class="menu px-3 h-[calc(100vh-210px)] overflow-y-auto">
+            <ul class="space-y-1">
+                <li><a href="#" data-page="home"
+                        class="nav-link active-link flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-gray-700 hover:translate-x-1">
+                        <span class="text-xl">🏠</span> <span>Dashboard</span>
+                    </a></li>
+                <li><a href="#" data-page="analytics"
+                        class="nav-link flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-gray-700 hover:translate-x-1 hover:text-primary-400">
+                        <span class="text-xl">📊</span> <span>Gráficos Dashboard de Vendas</span>
+                    </a></li>
                 <li class="submenu-parent">
-                    <a href="#" class="submenu-toggle flex justify-between items-center p-3 text-lg transition duration-200 hover:bg-gray-700 hover:text-primary-400"><i class="icon-product"></i> Produtos em Estoque <span class="arrow transition duration-300">▼</span></a>
-                    <ul class="submenu bg-gray-900 overflow-hidden transition-all duration-300 ease-in-out max-h-0">
-                        <li><a href="#" data-page="produtos-listar" class="block py-2 pl-10 pr-3 text-sm hover:bg-gray-700 hover:text-primary-400">Listar Produtos</a></li>
-                        <li><a href="#" data-page="produtos-cadastrar" class="block py-2 pl-10 pr-3 text-sm hover:bg-gray-700 hover:text-primary-400">Cadastrar Produto</a></li>
-                        <li><a href="#" data-page="produtos-importar" class="block py-2 pl-10 pr-3 text-sm hover:bg-gray-700 hover:text-primary-400">Importar (Excel/CSV)</a></li>
+                    <a href="#"
+                        class="submenu-toggle flex justify-between items-center p-3 rounded-lg transition-all duration-200 hover:bg-gray-700 hover:text-primary-400">
+                        <span class="flex items-center gap-3"><span class="text-xl">📦</span>
+                            <span>Produtos</span></span>
+                        <span class="arrow transition-transform duration-300">▼</span>
+                    </a>
+                    <ul
+                        class="submenu bg-gray-900/50 rounded-lg mt-1 overflow-hidden transition-all duration-300 max-h-0">
+                        <li><a href="#" data-page="produtos-listar"
+                                class="nav-link flex items-center gap-2 py-2 pl-12 pr-3 text-sm hover:bg-gray-700 hover:text-primary-400 transition-colors">
+                                <span>→</span> Listar Produtos
+                            </a></li>
+                        <li><a href="#" data-page="produtos-cadastrar"
+                                class="nav-link flex items-center gap-2 py-2 pl-12 pr-3 text-sm hover:bg-gray-700 hover:text-primary-400 transition-colors">
+                                <span>→</span> Novo Produto
+                            </a></li>
+                        <li><a href="#" data-page="produtos-importar"
+                                class="nav-link flex items-center gap-2 py-2 pl-12 pr-3 text-sm hover:bg-gray-700 hover:text-primary-400 transition-colors">
+                                <span>→</span> Importar
+                            </a></li>
                     </ul>
                 </li>
                 <li class="submenu-parent">
-                    <a href="#" class="submenu-toggle flex justify-between items-center p-3 text-lg transition duration-200 hover:bg-gray-700 hover:text-primary-400"><i class="icon-user"></i> Clientes <span class="arrow transition duration-300">▼</span></a>
-                    <ul class="submenu bg-gray-900 overflow-hidden transition-all duration-300 ease-in-out max-h-0">
-                        <li><a href="#" data-page="clientes-listar" class="block py-2 pl-10 pr-3 text-sm hover:bg-gray-700 hover:text-primary-400">Listar Clientes</a></li>
-                        <li><a href="#" data-page="clientes-cadastrar" class="block py-2 pl-10 pr-3 text-sm hover:bg-gray-700 hover:text-primary-400">Cadastrar Cliente</a></li>
+                    <a href="#"
+                        class="submenu-toggle flex justify-between items-center p-3 rounded-lg transition-all duration-200 hover:bg-gray-700 hover:text-primary-400">
+                        <span class="flex items-center gap-3"><span class="text-xl">👥</span>
+                            <span>Clientes</span></span>
+                        <span class="arrow transition-transform duration-300">▼</span>
+                    </a>
+                    <ul
+                        class="submenu bg-gray-900/50 rounded-lg mt-1 overflow-hidden transition-all duration-300 max-h-0">
+                        <li><a href="#" data-page="clientes-listar"
+                                class="nav-link flex items-center gap-2 py-2 pl-12 pr-3 text-sm hover:bg-gray-700 hover:text-primary-400 transition-colors">
+                                <span>→</span> Listar Clientes
+                            </a></li>
+                        <li><a href="#" data-page="clientes-cadastrar"
+                                class="nav-link flex items-center gap-2 py-2 pl-12 pr-3 text-sm hover:bg-gray-700 hover:text-primary-400 transition-colors">
+                                <span>→</span> Novo Cliente
+                            </a></li>
                     </ul>
                 </li>
+                <li><a href="#" data-page="pedidos"
+                        class="nav-link flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-gray-700 hover:translate-x-1 hover:text-primary-400">
+                        <span class="text-xl">🛒</span> <span>Pedidos</span>
+                    </a></li>
+                <li><a href="#" data-page="relatorios"
+                        class="nav-link flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-gray-700 hover:translate-x-1 hover:text-primary-400">
+                        <span class="text-xl">📋</span> <span>Relatórios</span>
+                    </a></li>
             </ul>
         </nav>
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-700">
+            <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-700 cursor-pointer transition-colors">
+                <div
+                    class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-gray-900 font-bold">
+                    A</div>
+                <div class="flex-1">
+                    <div class="text-sm font-medium">Admin</div>
+                    <div class="text-xs text-gray-400">admin@etech.com</div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="content flex-grow flex flex-col ml-64">
-        
-        <header class="header bg-white p-5 shadow-sm flex justify-between items-center flex-shrink-0 border-b border-gray-200 w-full">
-            <h1 class="text-2xl font-semibold text-primary-500">Bem-vindo ao Painel de Controle</h1>
-            <div class="user-info text-sm flex items-center text-gray-600">Admin <i class="icon-settings ml-2"></i></div>
+    <div class="content flex-grow flex flex-col md:ml-64">
+
+        <header
+            class="header bg-white p-5 shadow-sm flex justify-between items-center border-b border-gray-200 z-20 sticky top-0">
+            <div class="flex items-center gap-4">
+                <button id="open-sidebar-btn" class="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <div>
+                    <h1 id="header-title" class="text-2xl font-bold text-primary-700">Bem-vindo ao Painel</h1>
+                    <p id="header-subtitle" class="text-sm text-gray-500 mt-1">Gerencie seu e-commerce com facilidade
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="relative hidden sm:block">
+                    <input type="search" placeholder="Buscar..."
+                        class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+                </div>
+                <button class="relative p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <span class="text-2xl">🔔</span>
+                    <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+            </div>
         </header>
 
-        <main id="main-content" class="p-6 md:p-10 flex-grow overflow-y-auto">
-            
-            <section id="page-home" class="page-content bg-white p-8 rounded-lg shadow-xl block">
-                <h2 class="text-xl font-semibold mb-5 pb-2 border-b-2 border-primary-500 text-gray-700">Início</h2>
-                <p class="mb-6 text-gray-600">Visão geral do sistema de e-commerce. Utilize o menu ao lado para navegar entre os módulos.</p>
-                <div class="stats-grid grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    <div class="stat-card bg-white p-5 rounded-lg shadow-md border-l-4 border-primary-500">
-                        <h3 class="text-sm text-gray-500 mb-1 font-medium">Total de Vendas</h3>
-                        <p class="text-3xl font-bold text-gray-900">R$ 150.000,00</p>
+        <main id="main-content" class="p-4 sm:p-6 flex-grow overflow-y-auto bg-gray-50">
+
+            <section id="page-home" class="page-content">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Dashboard</h2>
+                    <p class="text-gray-600">Visão geral das suas métricas principais</p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                    <div
+                        class="stat-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-primary-500 hover:shadow-xl transition-shadow">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="text-sm text-gray-500 font-medium">Total de Vendas</h3>
+                                <p class="text-3xl font-bold text-gray-900 mt-2">R$ 150.000</p>
+                            </div>
+                            <span class="text-3xl text-primary-500">💰</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <span class="text-primary-600 font-semibold">+12.5%</span> <span class="text-gray-500">vs mês anterior</span>
+                        </div>
                     </div>
-                    <div class="stat-card bg-white p-5 rounded-lg shadow-md border-l-4 border-primary-500">
-                        <h3 class="text-sm text-gray-500 mb-1 font-medium">Produtos em Estoque</h3>
-                        <p class="text-3xl font-bold text-gray-900">850 Itens</p>
+                    <div
+                        class="stat-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500 hover:shadow-xl transition-shadow">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="text-sm text-gray-500 font-medium">Produtos</h3>
+                                <p class="text-3xl font-bold text-gray-900 mt-2">850</p>
+                            </div>
+                            <span class="text-3xl text-blue-500">📦</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <span class="text-primary-600 font-semibold">+8</span> <span class="text-gray-500">novos esta semana</span>
+                        </div>
                     </div>
-                    <div class="stat-card bg-white p-5 rounded-lg shadow-md border-l-4 border-primary-500">
-                        <h3 class="text-sm text-gray-500 mb-1 font-medium">Novos Clientes</h3>
-                        <p class="text-3xl font-bold text-gray-900">45</p>
+                    <div
+                        class="stat-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-primary-500 hover:shadow-xl transition-shadow">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="text-sm text-gray-500 font-medium">Clientes</h3>
+                                <p class="text-3xl font-bold text-gray-900 mt-2">1,245</p>
+                            </div>
+                            <span class="text-3xl text-primary-500">👥</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <span class="text-primary-600 font-semibold">+45</span> <span class="text-gray-500">este mês</span>
+                        </div>
                     </div>
-                    <div class="stat-card bg-white p-5 rounded-lg shadow-md border-l-4 border-primary-500">
-                        <h3 class="text-sm text-gray-500 mb-1 font-medium">Pedidos Pendentes</h3>
-                        <p class="text-3xl font-bold text-gray-900">12</p>
+                    <div
+                        class="stat-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-orange-500 hover:shadow-xl transition-shadow">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="text-sm text-gray-500 font-medium">Pedidos Pendentes</h3>
+                                <p class="text-3xl font-bold text-gray-900 mt-2">12</p>
+                            </div>
+                            <span class="text-3xl text-orange-500">⏳</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <span class="text-orange-600 font-semibold">Atenção</span>
+                            <span class="text-gray-500">necessária</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold mb-4 text-gray-800">Vendas dos Últimos 7 Dias</h3>
+                        <div class="relative h-64">
+                            <canvas id="quickSalesChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold mb-4 text-gray-800">Top Produtos</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">💻</span>
+                                    <div>
+                                        <p class="font-medium text-gray-800">Notebook Gamer X</p>
+                                        <p class="text-sm text-gray-500">152 vendas</p>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-primary-600">R$ 1.14M</span> </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">📱</span>
+                                    <div>
+                                        <p class="font-medium text-gray-800">Smartphone Ultra Z</p>
+                                        <p class="text-sm text-gray-500">98 vendas</p>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-primary-600">R$ 313K</span> </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">🖥️</span>
+                                    <div>
+                                        <p class="font-medium text-gray-800">Monitor LED 27"</p>
+                                        <p class="text-sm text-gray-500">76 vendas</p>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-primary-600">R$ 95K</span> </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Atividades Recentes</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 pb-4 border-b border-gray-100">
+                            <span class="text-2xl text-primary-500">✅</span>
+                            <div class="flex-1">
+                                <p class="font-medium text-gray-800">Novo pedido #1234 recebido</p>
+                                <p class="text-sm text-gray-500">Cliente: Ana Silva - R$ 3.200,00</p>
+                                <p class="text-xs text-gray-400 mt-1">Há 5 minutos</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 pb-4 border-b border-gray-100">
+                            <span class="text-2xl text-primary-500">📦</span>
+                            <div class="flex-1">
+                                <p class="font-medium text-gray-800">Produto enviado #1230</p>
+                                <p class="text-sm text-gray-500">Cliente: Bruno Costa</p>
+                                <p class="text-xs text-gray-400 mt-1">Há 1 hora</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="text-2xl text-orange-500">⚠️</span>
+                            <div class="flex-1">
+                                <p class="font-medium text-gray-800">Estoque baixo: Monitor LED 27"</p>
+                                <p class="text-sm text-gray-500">Apenas 5 unidades restantes</p>
+                                <p class="text-xs text-gray-400 mt-1">Há 2 horas</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section id="page-dashboard" class="page-content bg-white p-8 rounded-lg shadow-xl hidden">
-                <h2 class="text-xl font-semibold mb-5 pb-2 border-b-2 border-primary-500 text-gray-700">Gráficos Dashboard de Vendas</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="chart-container p-6 border border-gray-200 rounded-lg shadow-sm h-96">
-                        <h3 class="text-lg font-medium mb-4 text-gray-700">Vendas por Mês</h3>
-                        <canvas id="vendasChart" class="max-w-full h-full w-full"></canvas>
+            <section id="page-analytics" class="page-content hidden">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Analytics Avançado</h2>
+                    <p class="text-gray-600">Análise detalhada de performance</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold mb-4 text-gray-800">Vendas por Mês</h3>
+                        <div class="relative h-80">
+                            <canvas id="vendasChart"></canvas>
+                        </div>
                     </div>
-                    <div class="chart-container p-6 border border-gray-200 rounded-lg shadow-sm h-96">
-                        <h3 class="text-lg font-medium mb-4 text-gray-700">Distribuição por Categoria</h3>
-                        <canvas id="categoriaChart" class="max-w-full h-full w-full"></canvas>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold mb-4 text-gray-800">Distribuição por Categoria</h3>
+                        <div class="relative h-80">
+                            <canvas id="categoriaChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg lg:col-span-2">
+                        <h3 class="text-lg font-semibold mb-4 text-gray-800">Performance Anual</h3>
+                        <div class="relative h-72">
+                            <canvas id="anualChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section id="page-produtos-cadastrar" class="page-content bg-white p-8 rounded-lg shadow-xl hidden">
-                <h2 class="text-xl font-semibold mb-5 pb-2 border-b-2 border-primary-500 text-gray-700">Cadastrar Novo Produto</h2>
-                <form id="form-produto" class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-                    <div class="form-group mb-4 col-span-full">
-                        <label for="prod-nome" class="block mb-1 font-medium text-gray-600">Nome do Produto:</label>
-                        <input type="text" id="prod-nome" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
+            <section id="page-produtos-listar" class="page-content hidden">
+                <div class="mb-6 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2">Produtos em Estoque</h2>
+                        <p class="text-gray-600">Gerencie seu inventário</p>
                     </div>
-                    <div class="form-group mb-4 col-span-full">
-                        <label for="prod-descricao" class="block mb-1 font-medium text-gray-600">Descrição:</label>
-                        <textarea id="prod-descricao" rows="3" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
-                    </div>
-                    <div class="form-group mb-4 col-span-full">
-                        <label for="prod-caracteristicas" class="block mb-1 font-medium text-gray-600">Características:</label>
-                        <input type="text" id="prod-caracteristicas" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    </div>
-                    <div class="form-group mb-4">
-                        <label for="prod-valor" class="block mb-1 font-medium text-gray-600">Valor (R$):</label>
-                        <input type="number" id="prod-valor" step="0.01" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    </div>
-                    <div class="form-group mb-4">
-                        <label for="prod-estoque" class="block mb-1 font-medium text-gray-600">Estoque:</label>
-                        <input type="number" id="prod-estoque" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    </div>
-                    <button type="submit" class="btn-primary bg-primary-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-primary-600 transition duration-300 mt-4 col-span-full md:w-auto">Salvar Produto</button>
-                </form>
-            </section>
+                    <button onclick="showPage('produtos-cadastrar')"
+                        class="bg-primary-500 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-primary-600 transition-colors shadow-lg flex items-center gap-2">
+                        <span class="text-xl">+</span> Novo Produto
+                    </button>
+                </div>
 
-            <section id="page-produtos-listar" class="page-content bg-white p-8 rounded-lg shadow-xl hidden">
-                <h2 class="text-xl font-semibold mb-5 pb-2 border-b-2 border-primary-500 text-gray-700">Produtos em Estoque</h2>
-                <div class="overflow-x-auto">
-                    <table class="data-table w-full border border-gray-300 rounded-lg overflow-hidden">
-                        <thead>
-                            <tr>
-                                <th class="py-3 px-4 bg-primary-500 text-white text-sm font-semibold uppercase border-r border-primary-600">Nome</th>
-                                <th class="py-3 px-4 bg-primary-500 text-white text-sm font-semibold uppercase border-r border-primary-600">Valor</th>
-                                <th class="py-3 px-4 bg-primary-500 text-white text-sm font-semibold uppercase border-r border-primary-600">Estoque</th>
-                                <th class="py-3 px-4 bg-primary-500 text-white text-sm font-semibold uppercase">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            </tbody>
-                    </table>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-4 border-b border-gray-200 flex flex-wrap gap-4">
+                        <input type="search" id="search-produtos" placeholder="Buscar produtos..."
+                            class="flex-1 min-w-[200px] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        <select id="filter-estoque"
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <option value="">Todos</option>
+                            <option value="baixo">Estoque Baixo</option>
+                            <option value="alto">Estoque Alto</option>
+                        </select>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">
+                                        Produto</th>
+                                    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">Valor
+                                    </th>
+                                    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">
+                                        Estoque</th>
+                                    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">Status
+                                    </th>
+                                    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">Ações
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-produtos"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
-            <section id="page-produtos-importar" class="page-content bg-white p-8 rounded-lg shadow-xl hidden">
-                <h2 class="text-xl font-semibold mb-5 pb-2 border-b-2 border-primary-500 text-gray-700">Importar Produtos (Excel/CSV)</h2>
-                <p class="mb-5 text-gray-600">Selecione um arquivo para importar os dados de produtos.</p>
-                <form id="form-importar-produto" class="grid grid-cols-1">
-                    <div class="form-group mb-4">
-                        <label for="import-file" class="block mb-1 font-medium text-gray-600">Arquivo (.xlsx, .csv):</label>
-                        <input type="file" id="import-file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    </div>
-                    <button type="submit" class="btn-primary bg-primary-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-primary-600 transition duration-300 mt-4 md:w-auto">Importar Arquivo</button>
-                </form>
+            <section id="page-produtos-cadastrar" class="page-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Cadastrar Novo Produto</h2>
+                    <p class="text-gray-600">Adicione produtos ao seu estoque</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+                    <form id="form-produto" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <label class="block mb-2 font-medium text-gray-700">Nome do Produto</label>
+                            <input type="text" id="prod-nome" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block mb-2 font-medium text-gray-700">Descrição</label>
+                            <textarea id="prod-descricao" rows="3" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block mb-2 font-medium text-gray-700">Características (separadas por
+                                vírgula)</label>
+                            <input type="text" id="prod-caracteristicas" placeholder="Ex: 16GB RAM, 512GB SSD, Preto"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div>
+                            <label class="block mb-2 font-medium text-gray-700">Valor (R$)</label>
+                            <input type="number" id="prod-valor" step="0.01" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div>
+                            <label class="block mb-2 font-medium text-gray-700">Estoque</label>
+                            <input type="number" id="prod-estoque" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div class="md:col-span-2 flex gap-4">
+                            <button type="submit"
+                                class="bg-primary-500 text-gray-900 font-semibold py-3 px-8 rounded-lg hover:bg-primary-600 transition-colors shadow-lg">
+                                Salvar Produto
+                            </button>
+                            <button type="button" onclick="showPage('produtos-listar')"
+                                class="bg-gray-200 text-gray-700 font-semibold py-3 px-8 rounded-lg hover:bg-gray-300 transition-colors">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </section>
 
-            <section id="page-clientes-cadastrar" class="page-content bg-white p-8 rounded-lg shadow-xl hidden">
-                <h2 class="text-xl font-semibold mb-5 pb-2 border-b-2 border-primary-500 text-gray-700">Cadastrar Novo Cliente</h2>
-                <form id="form-cliente" class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-                    <div class="form-group mb-4 col-span-full">
-                        <label for="cli-nome" class="block mb-1 font-medium text-gray-600">Nome Completo:</label>
-                        <input type="text" id="cli-nome" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    </div>
-                    <div class="form-group mb-4 col-span-full">
-                        <label for="cli-endereco" class="block mb-1 font-medium text-gray-600">Endereço:</label>
-                        <input type="text" id="cli-endereco" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    </div>
-                    <div class="form-group mb-4">
-                        <label for="cli-telefone" class="block mb-1 font-medium text-gray-600">Telefone:</label>
-                        <input type="tel" id="cli-telefone" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    </div>
-                    <div class="form-group mb-4">
-                        <label for="cli-email" class="block mb-1 font-medium text-gray-600">E-mail:</label>
-                        <input type="email" id="cli-email" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    </div>
-                    <button type="submit" class="btn-primary bg-primary-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-primary-600 transition duration-300 mt-4 col-span-full md:w-auto">Salvar Cliente</button>
-                </form>
+            <section id="page-produtos-importar" class="page-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Importar Produtos</h2>
+                    <p class="text-gray-600">Importe múltiplos produtos via arquivo</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-lg max-w-3xl mx-auto">
+                    <form id="form-importar-produto">
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:border-primary-500 transition-colors"
+                            id="drop-zone">
+                            <span class="text-6xl mb-4 block text-primary-500">📁</span> <label for="import-file"
+                                class="cursor-pointer">
+                                <span class="text-lg font-medium text-gray-700">Clique para selecionar ou arraste o
+                                    arquivo</span>
+                                <p class="text-sm text-gray-500 mt-2">Formatos aceitos: .xlsx, .csv (máx. 10MB)</p>
+                                <input type="file" id="import-file"
+                                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                    class="hidden">
+                            </label>
+                        </div>
+                        <p id="file-name-display" class="text-center mt-4 text-gray-700 font-medium hidden"></p>
+                        <button type="submit"
+                            class="mt-6 bg-primary-500 text-gray-900 font-semibold py-3 px-8 rounded-lg hover:bg-primary-600 transition-colors shadow-lg w-full">
+                            Importar Arquivo
+                        </button>
+                    </form>
+                </div>
             </section>
 
-            <section id="page-clientes-listar" class="page-content bg-white p-8 rounded-lg shadow-xl hidden">
-                <h2 class="text-xl font-semibold mb-5 pb-2 border-b-2 border-primary-500 text-gray-700">Lista de Clientes</h2>
-                <div class="overflow-x-auto">
-                    <table class="data-table w-full border border-gray-300 rounded-lg overflow-hidden">
-                        <thead>
-                            <tr>
-                                <th class="py-3 px-4 bg-primary-500 text-white text-sm font-semibold uppercase border-r border-primary-600">Nome</th>
-                                <th class="py-3 px-4 bg-primary-500 text-white text-sm font-semibold uppercase border-r border-primary-600">E-mail</th>
-                                <th class="py-3 px-4 bg-primary-500 text-white text-sm font-semibold uppercase border-r border-primary-600">Telefone</th>
-                                <th class="py-3 px-4 bg-primary-500 text-white text-sm font-semibold uppercase">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            </tbody>
-                    </table>
+            <section id="page-clientes-listar" class="page-content hidden">
+                <div class="mb-6 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2">Lista de Clientes</h2>
+                        <p class="text-gray-600">Gerencie sua base de clientes</p>
+                    </div>
+                    <button onclick="showPage('clientes-cadastrar')"
+                        class="bg-primary-500 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-primary-600 transition-colors shadow-lg flex items-center gap-2">
+                        <span class="text-xl">+</span> Novo Cliente
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-4 border-b border-gray-200">
+                        <input type="search" id="search-clientes" placeholder="Buscar clientes..."
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">Nome
+                                    </th>
+                                    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">E-mail
+                                    </th>
+                                    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">
+                                        Telefone</th>
+                                    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">Ações
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-clientes"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="page-clientes-cadastrar" class="page-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Cadastrar Novo Cliente</h2>
+                    <p class="text-gray-600">Adicione clientes ao sistema</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+                    <form id="form-cliente" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <label class="block mb-2 font-medium text-gray-700">Nome Completo</label>
+                            <input type="text" id="cli-nome" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block mb-2 font-medium text-gray-700">Endereço</label>
+                            <input type="text" id="cli-endereco" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div>
+                            <label class="block mb-2 font-medium text-gray-700">Telefone</label>
+                            <input type="tel" id="cli-telefone" required placeholder="(XX) XXXXX-XXXX"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div>
+                            <label class="block mb-2 font-medium text-gray-700">E-mail</label>
+                            <input type="email" id="cli-email" required placeholder="email@exemplo.com"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <div class="md:col-span-2 flex gap-4">
+                            <button type="submit"
+                                class="bg-primary-500 text-gray-900 font-semibold py-3 px-8 rounded-lg hover:bg-primary-600 transition-colors shadow-lg">
+                                Salvar Cliente
+                            </button>
+                            <button type="button" onclick="showPage('clientes-listar')"
+                                class="bg-gray-200 text-gray-700 font-semibold py-3 px-8 rounded-lg hover:bg-gray-300 transition-colors">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section id="page-pedidos" class="page-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Gerenciar Pedidos</h2>
+                    <p class="text-gray-600">Acompanhe todos os pedidos</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        <p class="text-sm text-blue-600 font-medium">Aguardando</p>
+                        <p class="text-2xl font-bold text-blue-700">8</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+                        <p class="text-sm text-yellow-600 font-medium">Em Preparo</p>
+                        <p class="text-2xl font-bold text-yellow-700">12</p>
+                    </div>
+                    <div class="bg-primary-50 p-4 rounded-lg border-l-4 border-primary-500">
+                        <p class="text-sm text-primary-600 font-medium">Em Trânsito</p>
+                        <p class="text-2xl font-bold text-primary-700">15</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg border-l-4 border-primary-500"> <p class="text-sm text-primary-600 font-medium">Entregues</p>
+                        <p class="text-2xl font-bold text-primary-700">342</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-4 border-b border-gray-200 flex flex-wrap gap-4">
+                        <input type="search" placeholder="Buscar pedido..."
+                            class="flex-1 min-w-[200px] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        <select
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <option value="">Todos os status</option>
+                            <option value="aguardando">Aguardando</option>
+                            <option value="preparo">Em Preparo</option>
+                            <option value="transito">Em Trânsito</option>
+                            <option value="entregue">Entregue</option>
+                        </select>
+                    </div>
+                    <div id="lista-pedidos" class="divide-y divide-gray-200"></div>
+                </div>
+            </section>
+
+            <section id="page-relatorios" class="page-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Relatórios</h2>
+                    <p class="text-gray-600">Gere relatórios personalizados</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div
+                        class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer border-2 border-transparent hover:border-primary-500">
+                        <span class="text-4xl mb-4 block text-primary-500">📊</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Vendas Mensais</h3>
+                        <p class="text-gray-600 mb-4">Relatório completo de vendas por mês</p>
+                        <button class="text-primary-600 font-semibold hover:text-primary-700">Gerar Relatório →</button>
+                    </div>
+                    <div
+                        class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer border-2 border-transparent hover:border-primary-500">
+                        <span class="text-4xl mb-4 block text-primary-500">📦</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Estoque</h3>
+                        <p class="text-gray-600 mb-4">Inventário completo de produtos</p>
+                        <button class="text-primary-600 font-semibold hover:text-primary-700">Gerar Relatório →</button>
+                    </div>
+                    <div
+                        class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer border-2 border-transparent hover:border-primary-500">
+                        <span class="text-4xl mb-4 block text-primary-500">👥</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Clientes</h3>
+                        <p class="text-gray-600 mb-4">Base de clientes cadastrados</p>
+                        <button class="text-primary-600 font-semibold hover:text-primary-700">Gerar Relatório →</button>
+                    </div>
+                    <div
+                        class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer border-2 border-transparent hover:border-primary-500">
+                        <span class="text-4xl mb-4 block text-primary-500">💰</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Financeiro</h3>
+                        <p class="text-gray-600 mb-4">Demonstrativo de resultados</p>
+                        <button class="text-primary-600 font-semibold hover:text-primary-700">Gerar Relatório →</button>
+                    </div>
+                    <div
+                        class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer border-2 border-transparent hover:border-primary-500">
+                        <span class="text-4xl mb-4 block text-primary-500">📈</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Performance</h3>
+                        <p class="text-gray-600 mb-4">Análise de crescimento</p>
+                        <button class="text-primary-600 font-semibold hover:text-primary-700">Gerar Relatório
+                            →</button>
+                    </div>
+                    <div
+                        class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow cursor-pointer border-2 border-transparent hover:border-primary-500">
+                        <span class="text-4xl mb-4 block text-primary-500">🎯</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Personalizado</h3>
+                        <p class="text-gray-600 mb-4">Crie seu próprio relatório</p>
+                        <button class="text-primary-600 font-semibold hover:text-primary-700">Criar Relatório →</button>
+                    </div>
                 </div>
             </section>
 
@@ -181,14 +604,28 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
-    <style>
-        /* Ícones (Simulados - Tailwind não substitui ícones. Mantenho a funcionalidade original) */
-        .icon-home:before { content: '🏠 '; }
-        .icon-chart:before { content: '📈 '; }
-        .icon-product:before { content: '📦 '; }
-        .icon-user:before { content: '👤 '; }
-        .icon-settings:before { content: '⚙️'; }
-    </style>
+
     <script src="js/script.js"></script>
+
+    <div id="confirmation-modal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-8 rounded-xl shadow-2xl max-w-sm w-full transform transition-all scale-95 opacity-0"
+            id="modal-content">
+            <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-4">Confirmar Ação</h3>
+            <p id="modal-message" class="text-gray-600 mb-6">Você tem certeza?</p>
+            <div class="flex justify-end gap-4">
+                <button id="modal-cancel-btn"
+                    class="px-6 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
+                    Cancelar
+                </button>
+                <button id="modal-confirm-btn"
+                    class="px-6 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
+
 </html>
